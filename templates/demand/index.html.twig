@@ -1,20 +1,37 @@
+
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello DemandController!{% endblock %}
-
+{% block title %}demand List
+{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<div class="container-fluid">
+	{% if is_granted('ROLE_ADMIN')%}
+		<a class="btn btn-primary" href="{{ path ('createDemand') }}">Create New demand</a>
+		{% endif %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">demand Name</th>
+					<th scope="col">description</th>
+					<th scope="col">Functions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for demand in Demands %}
+					<tr>
+						<td scope="row">{{ demand.Name }}</td>
+						<td scope="row">{{ demand.Description }}</td>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'E:/WEBG301/code/projectweb/src/Controller/DemandController.php'|file_link(0) }}">src/Controller/DemandController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'E:/WEBG301/code/projectweb/templates/demand/index.html.twig'|file_link(0) }}">templates/demand/index.html.twig</a></code></li>
-    </ul>
-</div>
+						<td scope="row">
+							<a class="btn btn-info" href="{{ path ( 'detailDemand' , {'id' : demand.id } ) }}">Detail</a>
+							{% if is_granted('ROLE_ADMIN')%}
+							<a class="btn btn-warning" href="{{ path ( 'updateDemand' , {'id' : demand.id } ) }}">Update</a>
+							<a class="btn btn-danger" href="{{ path ( 'deleteDemand' , {'id' : demand.id } ) }}"
+                            onclick="return confirm('Are you sure to delete ?')">Delete</a>
+						{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}

@@ -1,20 +1,37 @@
+
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello RAMController!{% endblock %}
-
+{% block title %}ram List
+{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<div class="container-fluid">
+	{% if is_granted('ROLE_ADMIN')%}
+		<a class="btn btn-primary" href="{{ path ('createRAM') }}">Create New ram</a>
+		{% endif %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">ram Name</th>
+					<th scope="col">GB</th>
+					<th scope="col">Functions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for ram in RAMs %}
+					<tr>
+						<td scope="row">{{ ram.Name }}</td>
+						<td scope="row">{{ ram.Description }}</td>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'E:/WEBG301/code/projectweb/src/Controller/RAMController.php'|file_link(0) }}">src/Controller/RAMController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'E:/WEBG301/code/projectweb/templates/ram/index.html.twig'|file_link(0) }}">templates/ram/index.html.twig</a></code></li>
-    </ul>
-</div>
+						<td scope="row">
+							<a class="btn btn-info" href="{{ path ( 'detailRAM' , {'id' : ram.id } ) }}">Detail</a>
+							{% if is_granted('ROLE_ADMIN')%}
+							<a class="btn btn-warning" href="{{ path ( 'updateRAM' , {'id' : ram.id } ) }}">Update</a>
+							<a class="btn btn-danger" href="{{ path ( 'deleteRAM' , {'id' : ram.id } ) }}"
+                            onclick="return confirm('Are you sure to delete ?')">Delete</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}

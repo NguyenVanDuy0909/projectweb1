@@ -14,7 +14,7 @@ class CPUFixtures extends Fixture
             $cpu = new CPU; 
             $cpu->setName("CPU $i");
             $cpu->setDescription("i9");
-            $cpu->setImage("images/cpu.png");
+            $cpu->setImage("cpu.jpg");
             $manager->persist($cpu);
         }
         $manager->flush();

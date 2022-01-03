@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Create a new Laptop
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid mt-3">
+		<h2 class="text-center mt-5">Create new Laptop</h2>
+		<div class="col-md-6"></div>
+		{{ form_start (form) }}
+		<div class="form-group">
+			{{ form_label (form.name) }}
+			{{ form_widget (form.name, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label (form.color) }}
+			{{ form_widget (form.color, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+
+		<div class="form-group">
+			{{ form_label (form.madein) }}
+			{{ form_widget (form.madein, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label (form.price) }}
+			{{ form_widget (form.price, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label (form.priceDiscount) }}
+			{{ form_widget (form.priceDiscount, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			<p class="text-info text-bold">Image</p>
+			{{ form_label (form.image) }}
+			{{ form_widget (form.image, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+
+		<div class="form-group text-center mt-3">
+			{{ form_end (form)}}
+			<button class="btn btn-primary btn-lg">Create</button>
+		</div>
+
+
+	</div>
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ Sizes.Name }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mt-3 mb-4">
+            <div class="col-md-8">
+                <h1 class="mt-4 mt-md-0">Size Type: {{ Sizes.Name }}</h1>
+                <h2 class="mt-4 mt-md-0">Size Description: {{ Sizes.Description }}</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}

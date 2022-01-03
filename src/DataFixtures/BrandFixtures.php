@@ -14,7 +14,7 @@ class BrandFixtures extends Fixture
             $brand = new Brand; 
             $brand->setName("Brand $i");
             $brand->setDescription("asus");
-            $brand->setImage("asus.png");
+            $brand->setImage("asus.jpg");
             $manager->persist($brand);
         }
         $manager->flush();

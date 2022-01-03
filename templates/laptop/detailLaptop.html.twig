@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ Laptops.name }}
+{% endblock %}
+
+{% block body %}
+	{# {% if laptop != null %} #}
+	<div class="container">
+		<div class="row mt-3 mb-4">
+			<div class="col-md-4">
+				<img src="{{ asset ('img/' ~ Laptops.image) }}" width="500px" height="400px">
+			</div>
+			<div>
+				<h1 class="mt-4 mt-md-0">ID:
+					{{ Laptops.id }}</h1>
+				<h1 class="mt-4 mt-md-0">Name:
+					{{ Laptops.name }}</h1>
+				<h1 class="mt-4 mt-md-0">Made in:{{ Laptops.madein }}</h1>
+				<h1 class="mt-4 mt-md-0">price:{{ Laptops.price }}$</h1>
+				<h1 class="mt-4 mt-md-0">priceDiscount:{{ Laptops.priceDiscount }}$</h1>
+				<h1 class="mt-4 mt-md-0">Brand:
+					{{ Laptops.brand.name }} 
+					<a href="{{ path ('detailBrand',{'id' : laptop.brand.id}) }}"></a>
+				</h1>
+				<h1 class="mt-4 mt-md-0">CPU:
+					{{ Laptops.cPU.name }}<a href="{{ path ('detailCPU',{'id' : laptop.cPU.id}) }}"></a>
+				</h1>
+				<h1 class="mt-4 mt-md-0">RAM:
+					{{ Laptops.rAM.name  }}<a href="{{ path ('detailRAM',{'id' : laptop.rAM.id}) }}"></a>
+				</h1>
+				<h1 class="mt-4 mt-md-0">Demands:
+					{% for demand in laptop.demands %}
+
+						<a href="{{ path ('detailDemand',{'id' : laptop.cpu.id }) }}">
+							{{ demand.name }}
+						</a>
+					</h1>
+				{% endfor %}
+				<h1 class="mt-4 mt-md-0">Size:
+					{{ Laptops.size.name  }}<a href="{{ path ('detailSize',{'id' : laptop.size.id}) }}"></h1>
+
+
+				</a>
+			</div>
+		</div>
+	</div>
+	{# {% else %}
+			<h3>laptop not available</h3>
+			<h4>
+				<a href="{{ path ('laptop') }}">
+					Redirect to Laptop List</a>
+			</h4>
+		{% endif %} #}
+{% endblock %}
