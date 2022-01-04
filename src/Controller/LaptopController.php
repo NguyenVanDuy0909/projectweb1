@@ -35,7 +35,7 @@ class LaptopController extends AbstractController
         return $this->render(
             'laptop/detailLaptop.html.twig',
             [
-                'Laptops' => $laptop,
+                'laptop' => $laptop,
             ]
         );
     }
