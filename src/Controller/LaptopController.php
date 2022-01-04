@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Laptop;
+use App\Form\LaptopFormType;
+use App\Repository\LaptopRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,11 +15,11 @@ class LaptopController extends AbstractController
     #[Route('/laptop', name: 'laptop')]
     public function index(): Response
     {
-        $laptop = $this->getDoctrine()->getRepository(Laptop::class)->findAll();
+        $laptops = $this->getDoctrine()->getRepository(Laptop::class)->findAll();
         return $this->render(
             'laptop/index.html.twig',
             [
-                'Laptops' => $laptop,
+                'laptops' => $laptops,
             ]
         );
     }
@@ -66,33 +68,33 @@ class LaptopController extends AbstractController
      */
     public function createLaptop(Request $request)
     {
-        // $laptop = new Laptop();
-        // $form = $this->createForm(LaptopFormType::class, $laptop);
-        // $form->handleRequest($request);
+        $laptop = new Laptop();
+        $form = $this->createForm(LaptopFormType::class, $laptop);
+        $form->handleRequest($request);
 
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $image = $laptop->getImage();
-        //     $fileName = md5(uniqid());
-        //     $fileExtension = $image->guessExtension();
-        //     $imageName = $fileName . '.' . $fileExtension;
-        //     try {
-        //         $image->move(
-        //             $this->getParameter('laptop_image'),
-        //             $imageName
-        //         );
-        //     } catch (FileException $e) {
-        //         throwException($e);
-        //     }
-        //     $laptop->setImage($imageName);
-        //     $manager = $this->getDoctrine()->getManager();
-        //     $manager->persist($laptop);
-        //     $manager->flush();
-        //     $this->addFlash("succsess", "A new laptop already be added to DB_Shop");
-        //     return $this->redirectToRoute('laptop');
-        // }
-        // return $this->render('laptop/createLaptop.html.twig', [
-        //     'form' => $form->createView(),
-        // ]);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $image = $laptop->getImage();
+            // $fileName = md5(uniqid());
+            // $fileExtension = $image->guessExtension();
+            // $imageName = $fileName . '.' . $fileExtension;
+            // try {
+            //     $image->move(
+            //         $this->getParameter('laptop_image'),
+            //         $imageName
+            //     );
+            // } catch (FileException $e) {
+            //     throwException($e);
+            // }
+            // $laptop->setImage($imageName);
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($laptop);
+            $manager->flush();
+            $this->addFlash("succsess", "A new laptop already be added to DB_Shop");
+            return $this->redirectToRoute('laptop');
+        }
+        return $this->render('laptop/createLaptop.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
 
@@ -103,34 +105,78 @@ class LaptopController extends AbstractController
      */
     public function updateLaptop(Request $request, $id)
     {
-        // $laptop = $this->getDoctrine()->getRepository(Laptop::class)->find($id);
-        // $form = $this->createForm(LaptopFormType::class, $laptop);
-        // $form->handleRequest($request);
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $file = $form['image']->getData();
-        //     if ($file != null) {
-        //         $image = $laptop->getCover();
-        //         $imgName = uniqid();
-        //         $imgExtension = $image->guessExtension();
-        //         $imageName = $imgName . "." . $imgExtension;
-        //         try {
-        //             $image->move(
-        //                 $this->getParameter('book_cover'),
-        //                 $imageName
-        //             );
-        //         } catch (FileException $e) {
-        //             throwException($e);
-        //         }
-        //         $laptop->setImage($imageName);
-        //     }
-        //     $manager = $this->getDoctrine()->getManager();
-        //     $manager->persist($laptop);
-        //     $manager->flush();
-        //     $this->addFlash("succsess", "A new laptop already be updated to DB_Shop");
-        //     return $this->redirectToRoute('laptop');;
-        // }
-        // return $this->render('laptop/updateLaptop.html.twig', [
-        //     'form' => $form->createView(),
-        // ]);
+        $laptop = $this->getDoctrine()->getRepository(Laptop::class)->find($id);
+        $form = $this->createForm(LaptopFormType::class, $laptop);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $file = $form['image']->getData();
+            // if ($file != null) {
+            //     $image = $laptop->getCover();
+            //     $imgName = uniqid();
+            //     $imgExtension = $image->guessExtension();
+            //     $imageName = $imgName . "." . $imgExtension;
+            //     try {
+            //         $image->move(
+            //             $this->getParameter('book_cover'),
+            //             $imageName
+            //         );
+            //     } catch (FileException $e) {
+            //         throwException($e);
+            //     }
+            //     $laptop->setImage($imageName);
+            // }
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($laptop);
+            $manager->flush();
+            $this->addFlash("succsess", "A new laptop already be updated to DB_Shop");
+            return $this->redirectToRoute('laptop');;
+        }
+        return $this->render('laptop/updateLaptop.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+     /**
+     * @Route("/laptop/sort/asc", name="sort_laptop_id_asc")
+     */
+    public function sortLaptopByIdAsc(LaptopRepository $repository)
+    {
+        $laptops = $repository->sortIdAsc();
+        return $this->render(
+            "laptop/index.html.twig",
+            [
+                'laptops' => $laptops
+            ]
+        );
+    }
+
+    /**
+     * @Route("/laptop/sort/desc", name="sort_laptop_id_desc")
+     */
+    public function sortLaptopByIdDesc(LaptopRepository $repository)
+    {
+        $laptops = $repository->sortIdDesc();
+        return $this->render(
+            "laptop/index.html.twig",
+            [
+                'laptops' => $laptops
+            ]
+        );
+    }
+
+    /**
+     * @Route("/laptop/search", name="search_laptop_name")
+     */
+    public function searchLaptopByTitle(LaptopRepository $repository, Request $request)
+    {
+        $name = $request->get("name");
+        $laptops = $repository->searchLaptop($name);
+        return $this->render(
+            "laptop/index.html.twig",
+            [
+                'laptops' => $laptops
+            ]
+        );
     }
 }

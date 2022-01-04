@@ -19,6 +19,43 @@ class LaptopRepository extends ServiceEntityRepository
         parent::__construct($registry, Laptop::class);
     }
 
+    /**
+     * @return Laptop[] 
+     */
+    public function sortIdAsc()
+    {
+        return $this->createQueryBuilder('laptop')
+            ->orderBy('laptop.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Laptop[] 
+     */
+    public function sortIdDesc()
+    {
+        return $this->createQueryBuilder('laptop')
+            ->orderBy('laptop.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Laptop[]
+     */
+    public function searchLaptop($name)
+    {
+        return $this->createQueryBuilder('laptop')
+            ->andWhere('laptop.name LIKE :name')
+            ->setParameter('name', '%' . $name . '%')
+            ->orderBy('laptop.name', 'asc')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
+
     // /**
     //  * @return Laptop[] Returns an array of Laptop objects
     //  */

@@ -24,21 +24,20 @@
 					{{ laptop.brand.name }} </a>
 				</h1>
 				<h1 class="mt-4 mt-md-0">CPU:
-					{{ laptop.cPU.name }}<a href="{{ path ('detailCPU',{'id' : laptop.cPU.id}) }}"></a>
+					<a href="{{ path ('detailCPU',{'id' : laptop.cPU.id}) }}">{{ laptop.cPU.name }}</a>
 				</h1>
 				<h1 class="mt-4 mt-md-0">RAM:
-					{{ laptop.rAM.name  }}<a href="{{ path ('detailRAM',{'id' : laptop.rAM.id}) }}"></a>
+					<a href="{{ path ('detailRAM',{'id' : laptop.rAM.id}) }}">{{ laptop.rAM.name  }}</a>
 				</h1>
 				<h1 class="mt-4 mt-md-0">Demands:
 					{% for demand in laptop.demands %}
-
-						<a href="{{ path ('detailDemand',{'id' : laptop.cpu.id }) }}">
+						<a href="{{ path ('detailDemand',{'id' : demand.id }) }}">
 							{{ demand.name }}
 						</a>
 					</h1>
 				{% endfor %}
 				<h1 class="mt-4 mt-md-0">Size:
-					{{ laptop.size.name  }}<a href="{{ path ('detailSize',{'id' : laptop.size.id}) }}"></h1>
+					<a href="{{ path ('detailSize',{'id' : laptop.size.id}) }}">{{ laptop.size.name  }}</h1>
 
 
 				</a>

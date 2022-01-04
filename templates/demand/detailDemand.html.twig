@@ -8,7 +8,11 @@
             <div class="col-md-8">
                 <h1 class="mt-4 mt-md-0">Demand type: {{ Demands.Name }}</h1>
                 <hr>
-                <b>Description: </b>{{ Demands.Description }}
+                <b>Description: </b>{{ Demands.Description }}<br>
+                <b>Laptops: </b>{% for laptop in Demands.Laptops %}
+                <a class="text -decoration-none" href="{{ path ('detailLaptop',{'id': laptop.id } ) }}"></a>
+                {{ laptop.name }}<br>
+                {% endfor %}
             </div>
         </div>
     </div>
