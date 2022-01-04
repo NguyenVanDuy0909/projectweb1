@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block title %}cpu List
+{% endblock %}
+{% block body %}
+	<div class="container-fluid">
+		{% if is_granted('ROLE_ADMIN')%}
+			<a class="btn btn-primary" href="{{ path ('createCPU') }}">Create New cpu</a>
+		{% endif %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">cpu Name</th>
+					<th scope="col">ProductLine</th>
+					<th scope="col">Functions</th>
+					<th scope="col">IMG</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for cpu in CPUs %}
+					<tr>
+						<td scope="row">{{ cpu.Name }}</td>
+						<td scope="row">{{ cpu.Description }}</td>
+						<td scope="row"><img src="{{ asset ('img/'~cpu.image ) }}" width="200" height="200"></td>
+						<td scope="row">
+							<a class="btn btn-info" href="{{ path ( 'detailCPU' , {'id' : cpu.id } ) }}">Detail</a>
+							{% if is_granted('ROLE_ADMIN')%}
+								<a class="btn btn-warning" href="{{ path ( 'updateCPU' , {'id' : cpu.id } ) }}">Update</a>
+								<a class="btn btn-danger" href="{{ path ( 'deleteCPU' , {'id' : cpu.id } ) }}" onclick="return confirm('Are you sure to delete ?')">Delete</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
