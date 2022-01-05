@@ -1,0 +1,37 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}demand List
+{% endblock %}
+{% block body %}
+	<div class="container-fluid">
+	{% if is_granted('ROLE_ADMIN')%}
+		<a class="btn btn-primary" href="{{ path ('createDemand') }}">Create New demand</a>
+		{% endif %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">demand Name</th>
+					<th scope="col">description</th>
+					<th scope="col">Functions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for demand in Demands %}
+					<tr>
+						<td scope="row">{{ demand.Name }}</td>
+						<td scope="row">{{ demand.Description }}</td>
+
+						<td scope="row">
+							<a class="btn btn-info" href="{{ path ( 'detailDemand' , {'id' : demand.id } ) }}">Detail</a>
+							{% if is_granted('ROLE_ADMIN')%}
+							<a class="btn btn-warning" href="{{ path ( 'updateDemand' , {'id' : demand.id } ) }}">Update</a>
+							<a class="btn btn-danger" href="{{ path ( 'deleteDemand' , {'id' : demand.id } ) }}"
+                            onclick="return confirm('Are you sure to delete ?')">Delete</a>
+						{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
