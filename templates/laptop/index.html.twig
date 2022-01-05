@@ -8,9 +8,9 @@
 {% block body %}
 	<div
 		class="container-fluid">
-		{# {% if is_granted('ROLE_ADMIN')%} #}
+		{% if is_granted('ROLE_ADMIN')%}
 		<a class="btn btn-primary" href="{{ path ('createLaptop') }}">Create New Laptop</a>
-		{# {% endif %} #}
+		{% endif %}
 		<div class="form-group col-md-4 mb-3">
 			<form action="{{path('search_laptop_name')}}" method="POST">
 				<input class="form-control" type="search" name="title" required placeholder="Search by laptop name">
@@ -48,11 +48,11 @@
 							<td scope="row"><img src="{{ asset ('img/'~laptop.image ) }}" width="100" height="100"></td>
 							<td scope="row">
 								<a class="btn btn-info" href="{{ path ( 'detailLaptop' , {'id' : laptop.id } ) }}">Detail</a>
-								{# {% if is_granted('ROLE_ADMIN')%} #}
+								{% if is_granted('ROLE_ADMIN')%}
 								<a class="btn btn-warning" href="{{ path ( 'updateLaptop' , {'id' : laptop.id } ) }}">Update</a>
 								<a class="btn btn-danger" href="{{ path ( 'deleteLaptop' , {'id' : laptop.id } ) }}" onclick="return confirm('Are you sure to delete ?')">Delete</a>
 							</td>
-							{# {% endif %} #}
+							{% endif %}
 						</tr>
 					{% endfor %}
 				</tbody>

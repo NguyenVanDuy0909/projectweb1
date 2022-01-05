@@ -17,6 +17,11 @@
 			{{ form_label (form.Description) }}
 			{{ form_widget (form.Description, {'attr': {'class' : 'form-control'}}) }}
 		</div>
+		<div class="form-group">
+			<p class="text-info text-bold">Image</p>
+			{{ form_label (form.image) }}
+			{{ form_widget (form.image, {'attr': {'class' : 'form-control'}}) }}
+		</div>
 		<div class="form-group text-center mt-3">
 			<button class="btn btn-primary btn-lg">Create</button>
 		</div>

@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
+use function PHPUnit\Framework\throwException;
 
 class LaptopController extends AbstractController
 {
@@ -73,19 +76,19 @@ class LaptopController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $image = $laptop->getImage();
-            // $fileName = md5(uniqid());
-            // $fileExtension = $image->guessExtension();
-            // $imageName = $fileName . '.' . $fileExtension;
-            // try {
-            //     $image->move(
-            //         $this->getParameter('laptop_image'),
-            //         $imageName
-            //     );
-            // } catch (FileException $e) {
-            //     throwException($e);
-            // }
-            // $laptop->setImage($imageName);
+            $image = $laptop->getImage();
+            $fileName = md5(uniqid());
+            $fileExtension = $image->guessExtension();
+            $imageName = $fileName . '.' . $fileExtension;
+            try {
+                $image->move(
+                    $this->getParameter('laptop_image'),
+                    $imageName
+                );
+            } catch (FileException $e) {
+                throwException($e);
+            }
+            $laptop->setImage($imageName);
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($laptop);
             $manager->flush();
@@ -109,22 +112,22 @@ class LaptopController extends AbstractController
         $form = $this->createForm(LaptopFormType::class, $laptop);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // $file = $form['image']->getData();
-            // if ($file != null) {
-            //     $image = $laptop->getCover();
-            //     $imgName = uniqid();
-            //     $imgExtension = $image->guessExtension();
-            //     $imageName = $imgName . "." . $imgExtension;
-            //     try {
-            //         $image->move(
-            //             $this->getParameter('book_cover'),
-            //             $imageName
-            //         );
-            //     } catch (FileException $e) {
-            //         throwException($e);
-            //     }
-            //     $laptop->setImage($imageName);
-            // }
+            $file = $form['image']->getData();
+            if ($file != null) {
+                $image = $laptop->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . "." . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('laptop_image'),
+                        $imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $laptop->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($laptop);
             $manager->flush();
@@ -137,7 +140,7 @@ class LaptopController extends AbstractController
     }
 
 
-     /**
+    /**
      * @Route("/laptop/sort/asc", name="sort_laptop_id_asc")
      */
     public function sortLaptopByIdAsc(LaptopRepository $repository)

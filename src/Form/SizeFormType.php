@@ -21,7 +21,11 @@ class SizeFormType extends AbstractType
             ->add('Description',TextType::class, 
             [ 
                 'label' => "Size Description",
-                'required' => true
+                'required' => true,
+                'attr'=> [
+                    'minlength' => 3,
+                    'maxlength' => 100 
+                    ]
                 
             ])
         ;

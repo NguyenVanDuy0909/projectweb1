@@ -5,9 +5,12 @@ namespace App\Controller;
 use App\Entity\Brand;
 use App\Form\BrandFormType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
+use function PHPUnit\Framework\throwException;
 
 class BrandController extends AbstractController
 {
@@ -35,6 +38,19 @@ class BrandController extends AbstractController
         $form = $this->createForm(BrandFormType::class, $brand);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $brand->getImage();
+            $fileName = md5(uniqid());
+            $fileExtension = $image->guessExtension();
+            $imageName = $fileName . '.' . $fileExtension;
+            try {
+                $image->move(
+                    $this->getParameter('laptop_image'),
+                    $imageName
+                );
+            } catch (FileException $e) {
+                throwException($e);
+            }
+            $brand->setImage($imageName);
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($brand);
             $manager->flush();
@@ -53,9 +69,25 @@ class BrandController extends AbstractController
     public function updateBrand(Request $request, $id)
     {
         $brand = $this->getDoctrine()->getRepository(Brand::class)->find($id);
-        $form = $this->createForm(BrandFormType::class, $brand);
+        $form = $this->createForm(BrandFormType ::class, $brand);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['image']->getData();
+            if ($file != null) {
+                $image = $brand->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . "." . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('laptop_image'),
+                        $imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $brand->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($brand);
             $manager->flush();

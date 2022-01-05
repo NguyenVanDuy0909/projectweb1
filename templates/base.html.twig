@@ -23,59 +23,60 @@
 	</head>
 	<style>
 		Body {
-			
+
 			background-color: pink;
 		}
 	</style>
 	<body>
-	{% block header %}
-		<nav class="navbar navbar-dark bg-dark sticky-top">
-			<div>
-				<a href="{{ path('home') }}" class="btn btn-light">
-					Homepage
-				</a>
-				<a href="{{ path('laptop') }}" class="btn btn-light">
-					Manage laptops
-				</a>
-				<a href="{{ path('cpu') }}" class="btn btn-light">
-					CPU
-				</a>
-				<a href="{{ path('ram') }}" class="btn btn-light">
-					RAM
-				</a>
-				<a href="{{ path('demand') }}" class="btn btn-light">
-					Demand
-				</a>
-				<a href="{{ path('brand') }}" class="btn btn-light">
-					Brands
-				</a>
-				<a href="{{ path('size') }}" class="btn btn-light">
-					Sizes
-				</a>
-				<a class="nav-item">
+		{% block header %}
+			<nav class="navbar navbar-dark bg-dark sticky-top">
+				<div>
+					<a href="{{ path('home') }}" class="btn btn-light">
+						Homepage
+					</a>
+					<a href="{{ path('laptop') }}" class="btn btn-light">
+						Manage laptops
+					</a>
+					<a href="{{ path('cpu') }}" class="btn btn-light">
+						CPU
+					</a>
+					<a href="{{ path('ram') }}" class="btn btn-light">
+						RAM
+					</a>
+					<a href="{{ path('demand') }}" class="btn btn-light">
+						Demand
+					</a>
+					<a href="{{ path('brand') }}" class="btn btn-light">
+						Brands
+					</a>
+					<a href="{{ path('size') }}" class="btn btn-light">
+						Sizes
+					</a>
+					<a class="nav-item">
 
-					{# <a class="btn btn-light" href="{{ path('app_logout')}}">Logout</a> #}
+						<a class="btn btn-light" href="{{ path('app_logout')}}">Logout</a>
 
-				</a>
-			</div>
+					</a>
+				</div>
 
-		</nav>
-	{% endblock %}
-
-
-	{% block flash %}
-		{% for  flash in app.flashes("Error") %}
-			<p class="alert alert-danger">{{ flash}}</p>
-		{% endfor %}
-		{% for  flash in app.flashes("success") %}
-			<p class="alert alert-success">{{ flash }}</p>
-		{% endfor %}
-		{% for  flash in app.flashes("delete successful !!!") %}
-			<p class="alert alert-success">{{ flash }}</p>
-		{% endfor %}
-		
-	{% endblock %}
+			</nav>
+		{% endblock %}
 
 
-	{% block body %}{% endblock %}
+		{% block flash %}
+			{% for  flash in app.flashes("Error") %}
+				<p class="alert alert-danger">{{ flash}}</p>
+			{% endfor %}
+			{% for  flash in app.flashes("success") %}
+				<p class="alert alert-success">{{ flash }}</p>
+			{% endfor %}
+			{% for  flash in app.flashes("delete successful !!!") %}
+				<p class="alert alert-success">{{ flash }}</p>
+			{% endfor %}
+
+		{% endblock %}
+
+
+		{% block body %}{% endblock %}
+	</body>
 </html></body></html>

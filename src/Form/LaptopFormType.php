@@ -47,6 +47,59 @@ class LaptopFormType extends AbstractType
                 'data_class' => null,
                 'required' => is_null($builder->getData()->getImage())
             ])
+            ->add('priceDiscount',MoneyType::class,
+            [
+                'label' => "Price Discount",
+                'currency' => "USD"
+            ])
+
+            ->add('brand', EntityType::class,
+            [
+                'label' => 'Brand',
+                'required' => true,
+                'class' => Brand::class,
+                'choice_label' => 'name',
+                'multiple' => false,
+                'expanded' => false
+            ])
+            ->add('cPU', EntityType::class,
+            [
+                'label' => 'CPU',
+                'required' => true,
+                'class' => CPU::class,
+                'choice_label' => 'name',
+                'multiple' => false,
+                'expanded' => false
+            ])
+
+            ->add('demands', EntityType::class,
+            [
+                'label' => 'Demand(s)',
+                'required' => true,
+                'class' => Demand::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true
+            ])
+            ->add('rAM', EntityType::class,
+            [
+                'label' => 'RAM',
+                'required' => true,
+                'class' => RAM::class,
+                'choice_label' => 'name',
+                'multiple' => false,
+                'expanded' => false
+            ])
+            ->add('size', EntityType::class,
+            [
+                'label' => 'Size',
+                'required' => true,
+                'class' => Size::class,
+                'choice_label' => 'name',
+                'multiple' => false,
+                'expanded' => false
+            ])
+
         ;
     }
 

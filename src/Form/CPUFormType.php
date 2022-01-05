@@ -6,6 +6,7 @@ use App\Entity\CPU;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class CPUFormType extends AbstractType
@@ -22,8 +23,11 @@ class CPUFormType extends AbstractType
             [ 
                 'label' => "Description",
                 'required' => true
-                
-                
+            ])
+            ->add('image',FileType::class,
+            [
+                'data_class' => null,
+                'required' => is_null($builder->getData()->getImage())
             ])
         ;
     }
