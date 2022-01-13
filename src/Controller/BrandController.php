@@ -29,7 +29,7 @@ class BrandController extends AbstractController
     }
 
     /**
-     * 
+     
      * @Route("/brandCreate", name="createBrand")
      */
     public function createBrand(Request $request)
@@ -63,7 +63,7 @@ class BrandController extends AbstractController
     }
 
     /**
-     * 
+     
      * @Route("/brand/Update/{id}", name="updateBrand")
      */
     public function updateBrand(Request $request, $id)
